@@ -227,19 +227,7 @@ const States = () => {
                                 <FlexibleXYPlot
                                     id={x}
                                     style={plotStyle}
-                                    yDomain={[ 0, dailyMax ]}
-                                    onMouseLeave={e => {
-                                        for (let x in features) {
-                                            const plotDate = document.getElementById(`plotd-${x}`);
-                                            const plotVal = document.getElementById(`plotv-${x}`);
-                                            const plotMarker = document.getElementById(`plotm-${x}`);
-                                            const y = (x === 'other' ? daily[state].total[x] : timeseries[state].dates[lxk].delta[x]) ?? 0;
-
-                                            plotDate.innerHTML = lxf;
-                                            plotVal.innerHTML = y.toLocaleString();
-                                            plotMarker.style.opacity = 0;
-                                        }
-                                    }}>
+                                    yDomain={[ 0, dailyMax ]}>
 
                                     <HorizontalGridLines style={gridStyle} />
                                     <VerticalGridLines style={gridStyle} />
@@ -248,25 +236,7 @@ const States = () => {
                                         animation
                                         color="rgb(54 54 58)"
                                         style={barSeriesStyle}
-                                        data={dailyPlot}
-                                        onNearestX={(val, { event, innerX, index }) => {
-                                            for (let x in features) {
-                                                const plotDate = document.getElementById(`plotd-${x}`);
-                                                const plotVal = document.getElementById(`plotv-${x}`);
-                                                const plotMarker = document.getElementById(`plotm-${x}`);
-
-                                                const date = new Date(val.x * 86400000);
-                                                const sdate = `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear() % 100}`
-                                                const kdate = date.toISOString().slice(0, 10);
-                                                const ts_state = timeseries[state].dates;
-                                                let y = (x == 'other' ? ts_state[kdate].total[x] : ts_state[kdate].delta[x]) ?? 0;
-
-                                                plotDate.innerHTML = sdate;
-                                                plotVal.innerHTML = y.toLocaleString();
-                                                plotMarker.style.opacity = 1;
-                                                plotMarker.style.left = `${innerX + 41}px`;
-                                            }
-                                        }} />
+                                        data={dailyPlot} />
 
                                     <LineSeries 
                                         animation
